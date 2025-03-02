@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -32,7 +33,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -97,5 +98,88 @@
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-glass;
+  }
+  
+  .candidate-card {
+    @apply bg-white rounded-xl p-6 shadow-card transition-all duration-300 hover:shadow-lg;
+  }
+  
+  .contact-item {
+    @apply flex items-center gap-2 text-candidate-muted transition-all duration-300 hover:text-candidate-primary;
+  }
+  
+  .highlight-chip {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-candidate-accent text-candidate-secondary;
+  }
+  
+  .button-primary {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 
+           bg-candidate-secondary text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-candidate-secondary focus:ring-offset-2;
+  }
+  
+  .button-secondary {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300
+           bg-candidate-light text-candidate-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-candidate-light focus:ring-offset-2;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(142, 145, 150, 0.3);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(142, 145, 150, 0.5);
+}
+
+/* Page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 500ms, transform 500ms;
+}
+
+/* Lazy image loading effect */
+.lazy-image {
+  transition: filter 0.5s ease-out;
+}
+
+.lazy-image-loading {
+  filter: blur(10px);
+}
+
+.lazy-image-loaded {
+  filter: blur(0);
 }
