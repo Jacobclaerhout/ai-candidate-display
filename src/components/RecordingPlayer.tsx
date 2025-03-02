@@ -100,8 +100,7 @@ const RecordingPlayer = ({
       </div>
       
       <div className="mt-3 flex justify-between items-center">
-        <p className="text-sm font-medium">{title}</p>
-        <p className="text-xs text-candidate-muted">{duration}</p>
+        <span className="text-xs text-candidate-muted">{duration}</span>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { File, Download } from "lucide-react";
 import ContactCard from "./ContactCard";
@@ -73,13 +72,8 @@ const CandidateProfile = ({
 
   return (
     <div className={cn("w-full max-w-6xl mx-auto px-4 py-8", className)}>
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-2 animate-fade-in">{name}</h1>
-        <div className="highlight-chip">{position}</div>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-1">
+        <div className="md:col-span-1 md:sticky md:top-8 md:self-start">
           <ContactCard 
             name={name}
             email={email}
@@ -98,11 +92,14 @@ const CandidateProfile = ({
               analysis={analysis}
             />
             
-            <RecordingPlayer 
-              src={recordingUrl}
-              title={`${name} - Interview Recording`}
-              duration="15:42"
-            />
+            <div className="space-y-2">
+              <RecordingPlayer 
+                src={recordingUrl}
+                title={`${name} - Interview Recording`}
+                duration="15:42"
+              />
+              <p className="text-sm font-medium text-candidate-primary">{name} - Interview Recording</p>
+            </div>
             
             {(about || experience.length > 0 || education.length > 0) && (
               <ResumeDisplay
