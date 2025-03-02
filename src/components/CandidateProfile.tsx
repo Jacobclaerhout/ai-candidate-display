@@ -92,14 +92,11 @@ const CandidateProfile = ({
               analysis={analysis}
             />
             
-            <div className="space-y-2">
-              <RecordingPlayer 
-                src={recordingUrl}
-                title={`${name} - Interview Recording`}
-                duration="15:42"
-              />
-              <p className="text-sm font-medium text-candidate-primary">{name} - Interview Recording</p>
-            </div>
+            <RecordingPlayer 
+              src={recordingUrl}
+              title={`${name} - Interview Recording`}
+              duration="15:42"
+            />
             
             {(about || experience.length > 0 || education.length > 0) && (
               <ResumeDisplay
