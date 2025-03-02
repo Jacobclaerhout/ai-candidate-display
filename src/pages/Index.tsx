@@ -25,7 +25,46 @@ const Index = () => {
       "Some gaps in knowledge of newest cloud technologies",
       "May require additional training on proprietary systems"
     ],
-    analysis: "Adu demonstrates excellent technical capabilities in data management, with particular strength in data migration and architecture planning. The candidate has a solid understanding of information management systems and could quickly adapt to our organization's evolving data requirements. Their expertise in cloud transformation aligns well with our current initiatives."
+    analysis: "Adu demonstrates excellent technical capabilities in data management, with particular strength in data migration and architecture planning. The candidate has a solid understanding of information management systems and could quickly adapt to our organization's evolving data requirements. Their expertise in cloud transformation aligns well with our current initiatives.",
+    about: "Software engineer experienced in working within a high-paced startup setting and collaborating with a large agile team delivering under tight deadlines. Displaying conscientiousness in leadership situations. Demonstrated perseverance, great communication skills, and an eye for detail.",
+    experience: [
+      {
+        title: "Software Developer",
+        company: "Fintech",
+        period: "Oct 2022 - Present · 2 yrs 5 mo",
+        location: "London, England, United Kingdom",
+        logo: "/lovable-uploads/a05a5ce5-da7a-4437-b0e4-54942dfd2a23.png"
+      },
+      {
+        title: "Course Instructor",
+        company: "Code First Girls",
+        period: "Apr 2022 - Present · 2 yrs 11 mo",
+        location: "",
+        description: "Teaching Data and SQL and Web development courses",
+        logo: "/lovable-uploads/a05a5ce5-da7a-4437-b0e4-54942dfd2a23.png"
+      },
+      {
+        title: "Software Developer",
+        company: "3RDi",
+        period: "May 2021 - Oct 2022 · 1 yr 5 mo",
+        location: "London, England, United Kingdom",
+        logo: "/lovable-uploads/a05a5ce5-da7a-4437-b0e4-54942dfd2a23.png"
+      },
+      {
+        title: "Software Engineer",
+        company: "Quicktext",
+        period: "Oct 2019 - May 2021 · 1 yr 7 mo",
+        location: "Sousse Governorate, Tunisia",
+        logo: "/lovable-uploads/a05a5ce5-da7a-4437-b0e4-54942dfd2a23.png"
+      }
+    ],
+    education: [
+      {
+        institution: "Lycée Pilote de Monastir",
+        degree: "Computer Science",
+        logo: "/lovable-uploads/a05a5ce5-da7a-4437-b0e4-54942dfd2a23.png"
+      }
+    ]
   };
 
   return (
