@@ -1,6 +1,7 @@
 
-import { User, Mail, Phone, MapPin, Briefcase, Download } from "lucide-react";
+import { User, Mail, Phone, MapPin, Briefcase, Download, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface ContactCardProps {
   name: string;
@@ -21,6 +22,19 @@ const ContactCard = ({
   resumeUrl,
   className
 }: ContactCardProps) => {
+  
+  const handleShare = () => {
+    // Copy a link to the current page to clipboard
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => {
+        toast.success("Profile link copied to clipboard");
+      })
+      .catch((error) => {
+        toast.error("Failed to copy link");
+        console.error("Failed to copy link:", error);
+      });
+  };
+
   return (
     <div className={cn("candidate-card animate-scale-in", className)}>
       <div className="flex items-center gap-3 mb-4">
@@ -34,6 +48,14 @@ const ContactCard = ({
           )}
         </div>
       </div>
+      
+      <button 
+        onClick={handleShare} 
+        className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors mb-2 p-2 bg-candidate-accent/40 rounded-md w-full"
+      >
+        <Share2 className="w-4 h-4" />
+        <span>Share Profile</span>
+      </button>
       
       {resumeUrl && (
         <a 
