@@ -3,7 +3,6 @@ import { File, Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ResumeAnalysisProps {
-  recommendation: string;
   strengths?: string[];
   weaknesses?: string[];
   analysis?: string;
@@ -11,7 +10,6 @@ interface ResumeAnalysisProps {
 }
 
 const ResumeAnalysis = ({
-  recommendation,
   strengths = [],
   weaknesses = [],
   analysis,
@@ -23,11 +21,7 @@ const ResumeAnalysis = ({
         <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
           <File className="w-5 h-5 text-candidate-secondary" />
         </div>
-        <h3 className="font-medium text-lg">Candidate Analysis</h3>
-      </div>
-      
-      <div className="p-4 bg-candidate-accent/30 rounded-lg mb-4">
-        <p className="text-candidate-primary">{recommendation}</p>
+        <h3 className="font-medium text-lg">Resume Analysis</h3>
       </div>
       
       {analysis && (

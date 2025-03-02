@@ -1,5 +1,5 @@
 
-import { User, Mail, Phone, MapPin, Briefcase } from "lucide-react";
+import { User, Mail, Phone, MapPin, Briefcase, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ContactCardProps {
@@ -8,6 +8,7 @@ interface ContactCardProps {
   phone?: string;
   location?: string;
   position?: string;
+  resumeUrl?: string;
   className?: string;
 }
 
@@ -17,6 +18,7 @@ const ContactCard = ({
   phone,
   location,
   position,
+  resumeUrl,
   className
 }: ContactCardProps) => {
   return (
@@ -32,6 +34,18 @@ const ContactCard = ({
           )}
         </div>
       </div>
+      
+      {resumeUrl && (
+        <a 
+          href={resumeUrl} 
+          className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors mb-4 p-2 bg-candidate-accent/40 rounded-md"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Download className="w-4 h-4" />
+          <span>Download Resume</span>
+        </a>
+      )}
       
       <div className="space-y-3">
         {email && (
