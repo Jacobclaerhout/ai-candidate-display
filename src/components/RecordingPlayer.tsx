@@ -1,6 +1,6 @@
 
 import { useState, useRef } from "react";
-import { play, pause, video, check } from "lucide-react";
+import { Play, Pause, Video, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface RecordingPlayerProps {
@@ -41,7 +41,7 @@ const RecordingPlayer = ({
       return (
         <div className="flex flex-col items-center justify-center h-full p-6 text-center">
           <div className="w-16 h-16 mb-4 rounded-full bg-candidate-light flex items-center justify-center">
-            {video({ className: "w-8 h-8 text-candidate-muted" })}
+            <Video className="w-8 h-8 text-candidate-muted" />
           </div>
           <p className="text-candidate-muted">No recording available</p>
         </div>
@@ -69,8 +69,8 @@ const RecordingPlayer = ({
         >
           <div className="w-16 h-16 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center transition-transform duration-300 hover:scale-110">
             {isPlaying ? 
-              pause({ className: "w-6 h-6 text-candidate-primary" }) : 
-              play({ className: "w-6 h-6 ml-1 text-candidate-primary" })}
+              <Pause className="w-6 h-6 text-candidate-primary" /> : 
+              <Play className="w-6 h-6 ml-1 text-candidate-primary" />}
           </div>
         </button>
       </>
@@ -82,14 +82,14 @@ const RecordingPlayer = ({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-candidate-accent flex items-center justify-center">
-            {video({ className: "w-4 h-4 text-candidate-secondary" })}
+            <Video className="w-4 h-4 text-candidate-secondary" />
           </div>
           <h3 className="font-medium">Interview Recording</h3>
         </div>
         
         {isWatched && (
           <div className="flex items-center gap-1 text-xs text-green-600">
-            {check({ className: "w-3 h-3" })}
+            <Check className="w-3 h-3" />
             <span>Watched</span>
           </div>
         )}

@@ -1,5 +1,5 @@
 
-import { file, check, x } from "lucide-react";
+import { File, Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ResumeAnalysisProps {
@@ -21,7 +21,7 @@ const ResumeAnalysis = ({
     <div className={cn("candidate-card animate-fade-in", className)}>
       <div className="flex items-center gap-3 mb-4">
         <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
-          {file({ className: "w-5 h-5 text-candidate-secondary" })}
+          <File className="w-5 h-5 text-candidate-secondary" />
         </div>
         <h3 className="font-medium text-lg">Candidate Analysis</h3>
       </div>
@@ -44,7 +44,7 @@ const ResumeAnalysis = ({
             {strengths.map((strength, index) => (
               <li key={index} className="flex items-start gap-2">
                 <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
-                  {check({ className: "w-3 h-3 text-green-600" })}
+                  <Check className="w-3 h-3 text-green-600" />
                 </span>
                 <span className="text-sm">{strength}</span>
               </li>
@@ -60,7 +60,7 @@ const ResumeAnalysis = ({
             {weaknesses.map((weakness, index) => (
               <li key={index} className="flex items-start gap-2">
                 <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-red-100 flex items-center justify-center">
-                  {x({ className: "w-3 h-3 text-red-600" })}
+                  <X className="w-3 h-3 text-red-600" />
                 </span>
                 <span className="text-sm">{weakness}</span>
               </li>

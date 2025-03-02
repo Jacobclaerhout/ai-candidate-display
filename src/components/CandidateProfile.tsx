@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { file, download } from "lucide-react";
+import { File, Download } from "lucide-react";
 import ContactCard from "./ContactCard";
 import ResumeAnalysis from "./ResumeAnalysis";
 import RecordingPlayer from "./RecordingPlayer";
@@ -63,7 +62,7 @@ const CandidateProfile = ({
         
         <div className="flex items-center mb-6">
           <div className="w-12 h-12 rounded-full bg-candidate-accent flex items-center justify-center">
-            {file({ className: "w-6 h-6 text-candidate-secondary" })}
+            <File className="w-6 h-6 text-candidate-secondary" />
           </div>
           <div className="ml-4">
             <h3 className="text-xl font-medium">AI Assessment</h3>
@@ -86,7 +85,7 @@ const CandidateProfile = ({
           {isLoading ? (
             <span className="inline-block w-4 h-4 mr-2 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
           ) : (
-            download({ className: "w-4 h-4 mr-2" })
+            <Download className="w-4 h-4 mr-2" />
           )}
           {isLoading ? "Downloading..." : "Download Resume"}
         </button>
