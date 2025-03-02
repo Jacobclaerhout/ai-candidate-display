@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { File, Download } from "lucide-react";
 import ContactCard from "./ContactCard";
@@ -57,40 +58,6 @@ const CandidateProfile = ({
         <div className="highlight-chip">{position}</div>
       </div>
 
-      <div className="relative glass-card bg-white/95 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-card mb-8 animate-scale-in">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-white/95 rounded-2xl -z-10"></div>
-        
-        <div className="flex items-center mb-6">
-          <div className="w-12 h-12 rounded-full bg-candidate-accent flex items-center justify-center">
-            <File className="w-6 h-6 text-candidate-secondary" />
-          </div>
-          <div className="ml-4">
-            <h3 className="text-xl font-medium">AI Assessment</h3>
-            <p className="text-candidate-muted text-sm">Candidate evaluation and match report</p>
-          </div>
-        </div>
-        
-        <div className="bg-candidate-accent/30 rounded-lg p-4 mb-6 border border-candidate-accent/50">
-          <p className="text-candidate-primary">{recommendation}</p>
-        </div>
-        
-        <button 
-          className={cn(
-            "button-primary w-full sm:w-auto",
-            isLoading && "opacity-80 cursor-not-allowed"
-          )}
-          onClick={handleDownloadResume}
-          disabled={isLoading || !resumeUrl}
-        >
-          {isLoading ? (
-            <span className="inline-block w-4 h-4 mr-2 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-          ) : (
-            <Download className="w-4 h-4 mr-2" />
-          )}
-          {isLoading ? "Downloading..." : "Download Resume"}
-        </button>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-1">
           <ContactCard 
@@ -99,13 +66,13 @@ const CandidateProfile = ({
             phone={phone}
             location={location}
             position={position}
+            resumeUrl={resumeUrl}
           />
         </div>
         
         <div className="md:col-span-2">
           <div className="grid grid-cols-1 gap-6">
             <ResumeAnalysis 
-              recommendation={recommendation}
               strengths={strengths}
               weaknesses={weaknesses}
               analysis={analysis}
