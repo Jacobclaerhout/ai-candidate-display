@@ -1,6 +1,8 @@
 
-import { File, Check, X } from "lucide-react";
+import { File, Check, X, Briefcase } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface ResumeAnalysisProps {
   strengths?: string[];
@@ -15,13 +17,36 @@ const ResumeAnalysis = ({
   analysis,
   className
 }: ResumeAnalysisProps) => {
+  const [isUpdating, setIsUpdating] = useState(false);
+  
+  const handleUpdateRequirements = () => {
+    setIsUpdating(true);
+    
+    // Simulate an API call
+    setTimeout(() => {
+      setIsUpdating(false);
+      toast.success("Job requirements updated successfully");
+    }, 1500);
+  };
+  
   return (
     <div className={cn("candidate-card animate-fade-in", className)}>
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
-          <File className="w-5 h-5 text-candidate-secondary" />
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
+            <File className="w-5 h-5 text-candidate-secondary" />
+          </div>
+          <h3 className="font-medium text-lg">Resume Analysis</h3>
         </div>
-        <h3 className="font-medium text-lg">Resume Analysis</h3>
+        
+        <button 
+          onClick={handleUpdateRequirements}
+          disabled={isUpdating}
+          className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors p-2 bg-candidate-accent/40 rounded-md"
+        >
+          <Briefcase className="w-4 h-4" />
+          <span>{isUpdating ? "Updating..." : "Update Requirements"}</span>
+        </button>
       </div>
       
       {analysis && (
