@@ -1,21 +1,87 @@
 
-import { File, Check, X, Briefcase } from "lucide-react";
+import { File, Check, AlertTriangle, Briefcase } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Card } from "./ui/card";
+import { Separator } from "./ui/separator";
+
+interface Requirement {
+  id: string;
+  text: string;
+  isMet: boolean;
+  details: string;
+}
 
 interface ResumeAnalysisProps {
   strengths?: string[];
   weaknesses?: string[];
   analysis?: string;
   className?: string;
+  requirements?: Requirement[];
 }
 
 const ResumeAnalysis = ({
   strengths = [],
   weaknesses = [],
-  analysis,
-  className
+  analysis = "Extensive AI/ML experience demonstrated through roles at Cruise, Rivian, and Walmart Global Tech, as well as substantial academic contributions. Met 9/9 criteria - Candidate is significantly overqualified for the role.",
+  className,
+  requirements = [
+    {
+      id: "location",
+      text: "Must be in a 50 miles radius around Bay Area, United States.",
+      isMet: true,
+      details: "Candidate is located in Mountain View, California, which is within a 50 miles radius of the Bay Area."
+    },
+    {
+      id: "workAuth",
+      text: "Must have a right to work in the US.",
+      isMet: true,
+      details: "Holding several positions in the United States implies the right to work in the US."
+    },
+    {
+      id: "experience",
+      text: "Must have 5+ years of experience in AI/ML engineering.",
+      isMet: true,
+      details: "Candidate has been an AI/ML engineer with positions at Cruise (1.5 years), Rivian (3.5 years), and Walmart Global Tech (5 months), totaling over 5 years."
+    },
+    {
+      id: "startup",
+      text: "Must have proven experience working with AI-focused startups.",
+      isMet: true,
+      details: "Candidate worked at Rivian, an AI-focused startup."
+    },
+    {
+      id: "frameworks",
+      text: "Must have strong knowledge of machine learning frameworks such as TensorFlow, PyTorch, etc.",
+      isMet: true,
+      details: "Listed frameworks such as TensorFlow and Keras in skills."
+    },
+    {
+      id: "languages",
+      text: "Must have proficiency with programming languages like Python, R, or Java.",
+      isMet: true,
+      details: "Python and R listed under skills."
+    },
+    {
+      id: "problemSolving",
+      text: "Must have excellent problem-solving skills.",
+      isMet: true,
+      details: "Successful completion of complex AI projects indicates strong problem-solving capabilities."
+    },
+    {
+      id: "learning",
+      text: "Must demonstrate a proactive approach to learning new technologies.",
+      isMet: true,
+      details: "Continuously contributes to diverse AI and machine learning projects."
+    },
+    {
+      id: "environment",
+      text: "Must have the ability to work in a fast-paced, collaborative, and innovative environment.",
+      isMet: true,
+      details: "Collaborative work at dynamic environments like Cruise and Walmart Global Tech."
+    },
+  ]
 }: ResumeAnalysisProps) => {
   const [isUpdating, setIsUpdating] = useState(false);
   
@@ -29,65 +95,65 @@ const ResumeAnalysis = ({
     }, 1500);
   };
   
+  // Count met requirements
+  const metRequirementsCount = requirements.filter(req => req.isMet).length;
+  const totalRequirements = requirements.length;
+  
   return (
-    <div className={cn("candidate-card animate-fade-in", className)}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
-            <File className="w-5 h-5 text-candidate-secondary" />
+    <Card className={cn("shadow-md rounded-lg border-gray-100 overflow-hidden bg-white", className)}>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
+              <File className="w-5 h-5 text-candidate-secondary" />
+            </div>
+            <h3 className="font-medium text-xl">Application Review</h3>
           </div>
-          <h3 className="font-medium">Resume Analysis</h3>
+          
+          <div className="flex items-center gap-2">
+            <span className="text-gray-500 text-sm">19h ago</span>
+            <button 
+              onClick={handleUpdateRequirements}
+              disabled={isUpdating}
+              className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors p-2 bg-candidate-accent/40 rounded-md"
+            >
+              <Briefcase className="w-4 h-4" />
+              <span>{isUpdating ? "Updating..." : "Update Requirements"}</span>
+            </button>
+          </div>
         </div>
         
-        <button 
-          onClick={handleUpdateRequirements}
-          disabled={isUpdating}
-          className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors p-2 bg-candidate-accent/40 rounded-md"
-        >
-          <Briefcase className="w-4 h-4" />
-          <span>{isUpdating ? "Updating..." : "Update Requirements"}</span>
-        </button>
+        <div className="mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-gray-500 font-medium">Status:</span>
+            <span className="font-medium">Completed</span>
+          </div>
+          
+          <h4 className="font-medium text-lg mb-2">Analysis:</h4>
+          <p className="text-gray-700 mb-4">{analysis}</p>
+        </div>
+        
+        <Separator className="my-4 bg-gray-200" />
+        
+        <div className="space-y-6">
+          {requirements.map((requirement) => (
+            <div key={requirement.id} className="space-y-1">
+              <div className="flex items-start gap-2">
+                <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                  {requirement.isMet ? (
+                    <Check className="w-4 h-4 text-green-600" />
+                  ) : (
+                    <AlertTriangle className="w-4 h-4 text-amber-500" />
+                  )}
+                </span>
+                <span className="font-medium">{requirement.text}</span>
+              </div>
+              <p className="text-gray-500 ml-8">{requirement.details}</p>
+            </div>
+          ))}
+        </div>
       </div>
-      
-      {analysis && (
-        <div className="mb-4">
-          <h4 className="font-medium text-sm uppercase text-candidate-muted mb-2">Analysis</h4>
-          <p className="text-sm text-candidate-primary">{analysis}</p>
-        </div>
-      )}
-      
-      {strengths.length > 0 && (
-        <div className="mb-4">
-          <h4 className="font-medium text-sm uppercase text-candidate-muted mb-2">Strengths</h4>
-          <ul className="space-y-2">
-            {strengths.map((strength, index) => (
-              <li key={index} className="flex items-start gap-2">
-                <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
-                  <Check className="w-3 h-3 text-green-600" />
-                </span>
-                <span className="text-sm">{strength}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      
-      {weaknesses.length > 0 && (
-        <div>
-          <h4 className="font-medium text-sm uppercase text-candidate-muted mb-2">Areas for Improvement</h4>
-          <ul className="space-y-2">
-            {weaknesses.map((weakness, index) => (
-              <li key={index} className="flex items-start gap-2">
-                <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-red-100 flex items-center justify-center">
-                  <X className="w-3 h-3 text-red-600" />
-                </span>
-                <span className="text-sm">{weakness}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+    </Card>
   );
 };
 
