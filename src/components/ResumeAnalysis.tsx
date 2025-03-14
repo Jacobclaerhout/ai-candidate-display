@@ -162,47 +162,50 @@ const ResumeAnalysis = ({
         
         <p className="text-gray-700 mb-3 text-sm">{analysis}</p>
         
-        {/* Summary of requirements */}
-        <div className="flex items-center gap-2 mb-3 text-sm">
-          <span className="font-medium">Requirements:</span>
-          <span className="text-green-600 flex items-center gap-1">
-            <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center">
-              <Check className="w-2 h-2" />
-            </div>
-            {metCount}
-          </span>
-          <span className="text-blue-600 flex items-center gap-1">
-            <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
-              <Info className="w-2 h-2" />
-            </div>
-            {inferredCount}
-          </span>
-          <span className="text-amber-500 flex items-center gap-1">
-            <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center">
-              <HelpCircle className="w-2 h-2" />
-            </div>
-            {unsureCount}
-          </span>
-          <span className="text-red-600 flex items-center gap-1">
-            <div className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">
-              <X className="w-2 h-2" />
-            </div>
-            {notMetCount}
-          </span>
-        </div>
-        
-        <Separator className="my-3 bg-gray-200" />
-        
         {/* Collapsible requirements section */}
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <CollapsibleTrigger className="flex items-center justify-between w-full py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-            <span>Job Requirements ({metCount + inferredCount}/{totalRequirements})</span>
-            {isOpen ? (
-              <ChevronUp className="w-4 h-4 text-gray-500" />
-            ) : (
-              <ChevronDown className="w-4 h-4 text-gray-500" />
-            )}
+          <CollapsibleTrigger className="w-full">
+            {/* Summary of requirements as clickable trigger */}
+            <div className="flex items-center justify-between py-2">
+              <div className="flex items-center gap-2 text-sm">
+                <span className="font-medium">Requirements:</span>
+                <span className="text-green-600 flex items-center gap-1">
+                  <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-2 h-2" />
+                  </div>
+                  {metCount}
+                </span>
+                <span className="text-blue-600 flex items-center gap-1">
+                  <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
+                    <Info className="w-2 h-2" />
+                  </div>
+                  {inferredCount}
+                </span>
+                <span className="text-amber-500 flex items-center gap-1">
+                  <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center">
+                    <HelpCircle className="w-2 h-2" />
+                  </div>
+                  {unsureCount}
+                </span>
+                <span className="text-red-600 flex items-center gap-1">
+                  <div className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">
+                    <X className="w-2 h-2" />
+                  </div>
+                  {notMetCount}
+                </span>
+              </div>
+              <div className="text-sm font-medium text-gray-700">
+                {metCount + inferredCount}/{totalRequirements}
+                {isOpen ? (
+                  <ChevronUp className="inline-block ml-1 w-4 h-4 text-gray-500" />
+                ) : (
+                  <ChevronDown className="inline-block ml-1 w-4 h-4 text-gray-500" />
+                )}
+              </div>
+            </div>
           </CollapsibleTrigger>
+          
+          <Separator className="my-2 bg-gray-200" />
           
           <CollapsibleContent className="space-y-4 pt-2">
             {requirements.map((requirement) => (
