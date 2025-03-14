@@ -138,87 +138,85 @@ const ResumeAnalysis = ({
   };
   
   return (
-    <Card className={cn("rounded-lg border-gray-100 bg-white", className)}>
-      <div className="p-5">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-candidate-accent/50 flex items-center justify-center">
-              <File className="w-5 h-5 text-candidate-secondary" />
-            </div>
-            <h3 className="font-medium text-lg">Application Review</h3>
+    <div className={cn("candidate-card", className)}>
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 rounded-full bg-candidate-accent/50 flex items-center justify-center">
+            <File className="w-5 h-5 text-candidate-secondary" />
           </div>
-          
-          <button 
-            onClick={handleUpdateRequirements}
-            disabled={isUpdating}
-            className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors p-2 bg-candidate-accent/40 rounded-md"
-          >
-            <Briefcase className="w-4 h-4" />
-            <span>{isUpdating ? "Updating..." : "Update Requirements"}</span>
-          </button>
+          <h3 className="font-medium text-lg">Application Review</h3>
         </div>
         
-        <p className="text-gray-700 mb-3 text-sm">{analysis}</p>
-        
-        {/* Collapsible requirements section */}
-        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <CollapsibleTrigger className="w-full">
-            {/* Summary of requirements as clickable trigger */}
-            <div className="flex items-center justify-between py-2">
-              <div className="flex items-center gap-2 text-sm">
-                <span className="font-medium">Requirements:</span>
-                <span className="text-green-600 flex items-center gap-1">
-                  <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center">
-                    <Check className="w-2 h-2" />
-                  </div>
-                  {metCount}
-                </span>
-                <span className="text-blue-600 flex items-center gap-1">
-                  <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
-                    <Info className="w-2 h-2" />
-                  </div>
-                  {inferredCount}
-                </span>
-                <span className="text-amber-500 flex items-center gap-1">
-                  <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center">
-                    <HelpCircle className="w-2 h-2" />
-                  </div>
-                  {unsureCount}
-                </span>
-                <span className="text-red-600 flex items-center gap-1">
-                  <div className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">
-                    <X className="w-2 h-2" />
-                  </div>
-                  {notMetCount}
-                </span>
-              </div>
-              <div className="text-sm font-medium text-gray-700">
-                {metCount + inferredCount}/{totalRequirements}
-                {isOpen ? (
-                  <ChevronUp className="inline-block ml-1 w-4 h-4 text-gray-500" />
-                ) : (
-                  <ChevronDown className="inline-block ml-1 w-4 h-4 text-gray-500" />
-                )}
-              </div>
-            </div>
-          </CollapsibleTrigger>
-          
-          <CollapsibleContent className="space-y-4 pt-2">
-            {requirements.map((requirement) => (
-              <div key={requirement.id} className="space-y-1">
-                <div className="flex items-start gap-2">
-                  <span className={cn("mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center", getStatusBgColor(requirement.status))}>
-                    {renderStatusIcon(requirement.status)}
-                  </span>
-                  <span className="font-medium text-sm">{requirement.text}</span>
-                </div>
-                <p className="text-gray-500 text-xs ml-7">{requirement.details}</p>
-              </div>
-            ))}
-          </CollapsibleContent>
-        </Collapsible>
+        <button 
+          onClick={handleUpdateRequirements}
+          disabled={isUpdating}
+          className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors p-2 bg-candidate-accent/40 rounded-md"
+        >
+          <Briefcase className="w-4 h-4" />
+          <span>{isUpdating ? "Updating..." : "Update Requirements"}</span>
+        </button>
       </div>
-    </Card>
+      
+      <p className="text-gray-700 mb-3 text-sm">{analysis}</p>
+      
+      {/* Collapsible requirements section */}
+      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+        <CollapsibleTrigger className="w-full">
+          {/* Summary of requirements as clickable trigger */}
+          <div className="flex items-center justify-between py-2">
+            <div className="flex items-center gap-2 text-sm">
+              <span className="font-medium">Requirements:</span>
+              <span className="text-green-600 flex items-center gap-1">
+                <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center">
+                  <Check className="w-2 h-2" />
+                </div>
+                {metCount}
+              </span>
+              <span className="text-blue-600 flex items-center gap-1">
+                <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
+                  <Info className="w-2 h-2" />
+                </div>
+                {inferredCount}
+              </span>
+              <span className="text-amber-500 flex items-center gap-1">
+                <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center">
+                  <HelpCircle className="w-2 h-2" />
+                </div>
+                {unsureCount}
+              </span>
+              <span className="text-red-600 flex items-center gap-1">
+                <div className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">
+                  <X className="w-2 h-2" />
+                </div>
+                {notMetCount}
+              </span>
+            </div>
+            <div className="text-sm font-medium text-gray-700">
+              {metCount + inferredCount}/{totalRequirements}
+              {isOpen ? (
+                <ChevronUp className="inline-block ml-1 w-4 h-4 text-gray-500" />
+              ) : (
+                <ChevronDown className="inline-block ml-1 w-4 h-4 text-gray-500" />
+              )}
+            </div>
+          </div>
+        </CollapsibleTrigger>
+        
+        <CollapsibleContent className="space-y-4 pt-2">
+          {requirements.map((requirement) => (
+            <div key={requirement.id} className="space-y-1">
+              <div className="flex items-start gap-2">
+                <span className={cn("mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center", getStatusBgColor(requirement.status))}>
+                  {renderStatusIcon(requirement.status)}
+                </span>
+                <span className="font-medium text-sm">{requirement.text}</span>
+              </div>
+              <p className="text-gray-500 text-xs ml-7">{requirement.details}</p>
+            </div>
+          ))}
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
   );
 };
 
