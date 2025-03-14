@@ -1,10 +1,8 @@
-
 import { File, Check, AlertTriangle, Briefcase, Info, X, HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Card } from "./ui/card";
-import { Separator } from "./ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 
 // Define possible requirement statuses
@@ -204,8 +202,6 @@ const ResumeAnalysis = ({
               </div>
             </div>
           </CollapsibleTrigger>
-          
-          <Separator className="my-2 bg-gray-200" />
           
           <CollapsibleContent className="space-y-4 pt-2">
             {requirements.map((requirement) => (
