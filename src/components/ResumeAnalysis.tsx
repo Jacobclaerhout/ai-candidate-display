@@ -1,10 +1,11 @@
 
-import { File, Check, AlertTriangle, Briefcase, Info, X, HelpCircle } from "lucide-react";
+import { File, Check, AlertTriangle, Briefcase, Info, X, HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 
 // Define possible requirement statuses
 type RequirementStatus = "met" | "notMet" | "inferred" | "unsure";
@@ -87,6 +88,7 @@ const ResumeAnalysis = ({
   ]
 }: ResumeAnalysisProps) => {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   
   const handleUpdateRequirements = () => {
     setIsUpdating(true);
@@ -160,21 +162,62 @@ const ResumeAnalysis = ({
         
         <p className="text-gray-700 mb-3 text-sm">{analysis}</p>
         
+        {/* Summary of requirements */}
+        <div className="flex items-center gap-2 mb-3 text-sm">
+          <span className="font-medium">Requirements:</span>
+          <span className="text-green-600 flex items-center gap-1">
+            <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center">
+              <Check className="w-2 h-2" />
+            </div>
+            {metCount}
+          </span>
+          <span className="text-blue-600 flex items-center gap-1">
+            <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
+              <Info className="w-2 h-2" />
+            </div>
+            {inferredCount}
+          </span>
+          <span className="text-amber-500 flex items-center gap-1">
+            <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center">
+              <HelpCircle className="w-2 h-2" />
+            </div>
+            {unsureCount}
+          </span>
+          <span className="text-red-600 flex items-center gap-1">
+            <div className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">
+              <X className="w-2 h-2" />
+            </div>
+            {notMetCount}
+          </span>
+        </div>
+        
         <Separator className="my-3 bg-gray-200" />
         
-        <div className="space-y-4">
-          {requirements.map((requirement) => (
-            <div key={requirement.id} className="space-y-1">
-              <div className="flex items-start gap-2">
-                <span className={cn("mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center", getStatusBgColor(requirement.status))}>
-                  {renderStatusIcon(requirement.status)}
-                </span>
-                <span className="font-medium text-sm">{requirement.text}</span>
+        {/* Collapsible requirements section */}
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+          <CollapsibleTrigger className="flex items-center justify-between w-full py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
+            <span>Job Requirements ({metCount + inferredCount}/{totalRequirements})</span>
+            {isOpen ? (
+              <ChevronUp className="w-4 h-4 text-gray-500" />
+            ) : (
+              <ChevronDown className="w-4 h-4 text-gray-500" />
+            )}
+          </CollapsibleTrigger>
+          
+          <CollapsibleContent className="space-y-4 pt-2">
+            {requirements.map((requirement) => (
+              <div key={requirement.id} className="space-y-1">
+                <div className="flex items-start gap-2">
+                  <span className={cn("mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center", getStatusBgColor(requirement.status))}>
+                    {renderStatusIcon(requirement.status)}
+                  </span>
+                  <span className="font-medium text-sm">{requirement.text}</span>
+                </div>
+                <p className="text-gray-500 text-xs ml-7">{requirement.details}</p>
               </div>
-              <p className="text-gray-500 text-xs ml-7">{requirement.details}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </CollapsibleContent>
+        </Collapsible>
       </div>
     </Card>
   );
