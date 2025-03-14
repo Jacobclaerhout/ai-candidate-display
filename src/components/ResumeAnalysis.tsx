@@ -140,11 +140,11 @@ const ResumeAnalysis = ({
   };
   
   return (
-    <Card className={cn("shadow-md rounded-lg border-gray-100 overflow-hidden bg-white", className)}>
+    <Card className={cn("rounded-lg border-gray-100 bg-white", className)}>
       <div className="p-5">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-candidate-accent/50 flex items-center justify-center">
               <File className="w-5 h-5 text-candidate-secondary" />
             </div>
             <h3 className="font-medium text-lg">Application Review</h3>
