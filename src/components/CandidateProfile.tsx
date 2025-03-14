@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { File, Download, UserCheck, UserPlus } from "lucide-react";
+import { File, Download, Calendar } from "lucide-react";
 import ContactCard from "./ContactCard";
 import ResumeAnalysis from "./ResumeAnalysis";
 import RecordingPlayer from "./RecordingPlayer";
@@ -59,20 +59,11 @@ const CandidateProfile = ({
 }: CandidateProfileProps) => {
   const [isLoading, setIsLoading] = useState(false);
   
-  const handlePreScreening = () => {
+  const handleScheduleInterview = () => {
     setIsLoading(true);
     // Simulate API call
     setTimeout(() => {
-      toast.success(`Screening invitation sent to ${name}`);
-      setIsLoading(false);
-    }, 1000);
-  };
-  
-  const handleIntroRequest = () => {
-    setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      toast.success(`Introduction request sent for ${name}`);
+      toast.success(`Interview scheduled with ${name}`);
       setIsLoading(false);
     }, 1000);
   };
@@ -90,25 +81,15 @@ const CandidateProfile = ({
             resumeUrl={resumeUrl}
           />
           
-          <div className="mt-4 space-y-3">
-            <Button 
-              variant="secondary" 
-              className="w-full bg-candidate-accent/40 hover:bg-candidate-accent/60 text-candidate-secondary" 
-              onClick={handlePreScreening}
-              disabled={isLoading}
-            >
-              <UserCheck className="mr-1" />
-              Invite for pre-screening
-            </Button>
-            
+          <div className="mt-4">
             <Button 
               variant="outline" 
               className="w-full border-candidate-accent hover:bg-candidate-accent/40 text-candidate-secondary" 
-              onClick={handleIntroRequest}
+              onClick={handleScheduleInterview}
               disabled={isLoading}
             >
-              <UserPlus className="mr-1" />
-              Request an intro
+              <Calendar className="mr-1" />
+              Schedule an interview
             </Button>
           </div>
         </div>
