@@ -101,54 +101,43 @@ const ResumeAnalysis = ({
   
   return (
     <Card className={cn("shadow-md rounded-lg border-gray-100 overflow-hidden bg-white", className)}>
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
+      <div className="p-5">
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
               <File className="w-5 h-5 text-candidate-secondary" />
             </div>
-            <h3 className="font-medium text-xl">Application Review</h3>
+            <h3 className="font-medium text-lg">Application Review</h3>
           </div>
           
-          <div className="flex items-center gap-2">
-            <span className="text-gray-500 text-sm">19h ago</span>
-            <button 
-              onClick={handleUpdateRequirements}
-              disabled={isUpdating}
-              className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors p-2 bg-candidate-accent/40 rounded-md"
-            >
-              <Briefcase className="w-4 h-4" />
-              <span>{isUpdating ? "Updating..." : "Update Requirements"}</span>
-            </button>
-          </div>
+          <button 
+            onClick={handleUpdateRequirements}
+            disabled={isUpdating}
+            className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors p-2 bg-candidate-accent/40 rounded-md"
+          >
+            <Briefcase className="w-4 h-4" />
+            <span>{isUpdating ? "Updating..." : "Update Requirements"}</span>
+          </button>
         </div>
         
-        <div className="mb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-gray-500 font-medium">Status:</span>
-            <span className="font-medium">Completed</span>
-          </div>
-          
-          <h4 className="font-medium text-lg mb-2">Analysis:</h4>
-          <p className="text-gray-700 mb-4">{analysis}</p>
-        </div>
+        <p className="text-gray-700 mb-3 text-sm">{analysis}</p>
         
-        <Separator className="my-4 bg-gray-200" />
+        <Separator className="my-3 bg-gray-200" />
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           {requirements.map((requirement) => (
             <div key={requirement.id} className="space-y-1">
               <div className="flex items-start gap-2">
-                <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
                   {requirement.isMet ? (
-                    <Check className="w-4 h-4 text-green-600" />
+                    <Check className="w-3 h-3 text-green-600" />
                   ) : (
-                    <AlertTriangle className="w-4 h-4 text-amber-500" />
+                    <AlertTriangle className="w-3 h-3 text-amber-500" />
                   )}
                 </span>
-                <span className="font-medium">{requirement.text}</span>
+                <span className="font-medium text-sm">{requirement.text}</span>
               </div>
-              <p className="text-gray-500 ml-8">{requirement.details}</p>
+              <p className="text-gray-500 text-xs ml-7">{requirement.details}</p>
             </div>
           ))}
         </div>
