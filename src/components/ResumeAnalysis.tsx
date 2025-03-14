@@ -1,15 +1,18 @@
 
-import { File, Check, AlertTriangle, Briefcase } from "lucide-react";
+import { File, Check, AlertTriangle, Briefcase, Info, X, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 
+// Define possible requirement statuses
+type RequirementStatus = "met" | "notMet" | "inferred" | "unsure";
+
 interface Requirement {
   id: string;
   text: string;
-  isMet: boolean;
+  status: RequirementStatus;
   details: string;
 }
 
@@ -30,56 +33,56 @@ const ResumeAnalysis = ({
     {
       id: "location",
       text: "Must be in a 50 miles radius around Bay Area, United States.",
-      isMet: true,
+      status: "met",
       details: "Candidate is located in Mountain View, California, which is within a 50 miles radius of the Bay Area."
     },
     {
       id: "workAuth",
       text: "Must have a right to work in the US.",
-      isMet: true,
+      status: "inferred",
       details: "Holding several positions in the United States implies the right to work in the US."
     },
     {
       id: "experience",
       text: "Must have 5+ years of experience in AI/ML engineering.",
-      isMet: true,
+      status: "met",
       details: "Candidate has been an AI/ML engineer with positions at Cruise (1.5 years), Rivian (3.5 years), and Walmart Global Tech (5 months), totaling over 5 years."
     },
     {
       id: "startup",
       text: "Must have proven experience working with AI-focused startups.",
-      isMet: true,
+      status: "met",
       details: "Candidate worked at Rivian, an AI-focused startup."
     },
     {
       id: "frameworks",
       text: "Must have strong knowledge of machine learning frameworks such as TensorFlow, PyTorch, etc.",
-      isMet: true,
+      status: "met",
       details: "Listed frameworks such as TensorFlow and Keras in skills."
     },
     {
       id: "languages",
       text: "Must have proficiency with programming languages like Python, R, or Java.",
-      isMet: true,
+      status: "met",
       details: "Python and R listed under skills."
     },
     {
       id: "problemSolving",
       text: "Must have excellent problem-solving skills.",
-      isMet: true,
-      details: "Successful completion of complex AI projects indicates strong problem-solving capabilities."
+      status: "unsure",
+      details: "Resume suggests problem-solving skills, but should be confirmed in interview."
     },
     {
       id: "learning",
       text: "Must demonstrate a proactive approach to learning new technologies.",
-      isMet: true,
+      status: "inferred",
       details: "Continuously contributes to diverse AI and machine learning projects."
     },
     {
       id: "environment",
       text: "Must have the ability to work in a fast-paced, collaborative, and innovative environment.",
-      isMet: true,
-      details: "Collaborative work at dynamic environments like Cruise and Walmart Global Tech."
+      status: "notMet",
+      details: "Prior experience mostly in established companies. Fast-paced startup experience limited."
     },
   ]
 }: ResumeAnalysisProps) => {
@@ -95,9 +98,44 @@ const ResumeAnalysis = ({
     }, 1500);
   };
   
-  // Count met requirements
-  const metRequirementsCount = requirements.filter(req => req.isMet).length;
+  // Count requirements by status
+  const metCount = requirements.filter(req => req.status === "met").length;
+  const inferredCount = requirements.filter(req => req.status === "inferred").length;
+  const unsureCount = requirements.filter(req => req.status === "unsure").length;
+  const notMetCount = requirements.filter(req => req.status === "notMet").length;
   const totalRequirements = requirements.length;
+  
+  // Render the appropriate icon based on requirement status
+  const renderStatusIcon = (status: RequirementStatus) => {
+    switch (status) {
+      case "met":
+        return <Check className="w-3 h-3 text-green-600" />;
+      case "inferred":
+        return <Info className="w-3 h-3 text-blue-600" />;
+      case "unsure":
+        return <HelpCircle className="w-3 h-3 text-amber-500" />;
+      case "notMet":
+        return <X className="w-3 h-3 text-red-600" />;
+      default:
+        return null;
+    }
+  };
+  
+  // Get the appropriate background color for the status icon
+  const getStatusBgColor = (status: RequirementStatus) => {
+    switch (status) {
+      case "met":
+        return "bg-green-100";
+      case "inferred":
+        return "bg-blue-100";
+      case "unsure":
+        return "bg-amber-100";
+      case "notMet":
+        return "bg-red-100";
+      default:
+        return "bg-gray-100";
+    }
+  };
   
   return (
     <Card className={cn("shadow-md rounded-lg border-gray-100 overflow-hidden bg-white", className)}>
@@ -128,12 +166,8 @@ const ResumeAnalysis = ({
           {requirements.map((requirement) => (
             <div key={requirement.id} className="space-y-1">
               <div className="flex items-start gap-2">
-                <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
-                  {requirement.isMet ? (
-                    <Check className="w-3 h-3 text-green-600" />
-                  ) : (
-                    <AlertTriangle className="w-3 h-3 text-amber-500" />
-                  )}
+                <span className={cn("mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center", getStatusBgColor(requirement.status))}>
+                  {renderStatusIcon(requirement.status)}
                 </span>
                 <span className="font-medium text-sm">{requirement.text}</span>
               </div>
