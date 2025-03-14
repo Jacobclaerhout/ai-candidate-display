@@ -1,10 +1,13 @@
+
 import { useState } from "react";
-import { File, Download } from "lucide-react";
+import { File, Download, UserCheck, UserPlus } from "lucide-react";
 import ContactCard from "./ContactCard";
 import ResumeAnalysis from "./ResumeAnalysis";
 import RecordingPlayer from "./RecordingPlayer";
 import ResumeDisplay from "./ResumeDisplay";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface CandidateProfileProps {
   name: string;
@@ -55,17 +58,21 @@ const CandidateProfile = ({
   className
 }: CandidateProfileProps) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleDownloadResume = () => {
-    if (!resumeUrl) return;
-    
+  
+  const handlePreScreening = () => {
     setIsLoading(true);
-    
-    // Simulate download delay
+    // Simulate API call
     setTimeout(() => {
-      // In a real app, you'd handle the actual download here
-      // For now, just simulate opening the URL
-      window.open(resumeUrl, "_blank");
+      toast.success(`Screening invitation sent to ${name}`);
+      setIsLoading(false);
+    }, 1000);
+  };
+  
+  const handleIntroRequest = () => {
+    setIsLoading(true);
+    // Simulate API call
+    setTimeout(() => {
+      toast.success(`Introduction request sent for ${name}`);
       setIsLoading(false);
     }, 1000);
   };
@@ -82,6 +89,28 @@ const CandidateProfile = ({
             position={position}
             resumeUrl={resumeUrl}
           />
+          
+          <div className="mt-4 space-y-3">
+            <Button 
+              variant="secondary" 
+              className="w-full bg-candidate-accent/40 hover:bg-candidate-accent/60 text-candidate-secondary" 
+              onClick={handlePreScreening}
+              disabled={isLoading}
+            >
+              <UserCheck className="mr-1" />
+              Invite for pre-screening
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="w-full border-candidate-accent hover:bg-candidate-accent/40 text-candidate-secondary" 
+              onClick={handleIntroRequest}
+              disabled={isLoading}
+            >
+              <UserPlus className="mr-1" />
+              Request an intro
+            </Button>
+          </div>
         </div>
         
         <div className="md:col-span-2">
