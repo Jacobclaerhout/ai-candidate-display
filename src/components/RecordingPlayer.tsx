@@ -1,6 +1,6 @@
 
 import { useState, useRef } from "react";
-import { Play, Pause, Video, Check, Film } from "lucide-react";
+import { Play, Pause, Video, Film } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
@@ -23,7 +23,6 @@ const RecordingPlayer = ({
 }: RecordingPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [isWatched, setIsWatched] = useState(false);
   const [activeVideo, setActiveVideo] = useState<"intro" | "prescreening">("intro");
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -35,7 +34,6 @@ const RecordingPlayer = ({
       videoRef.current?.pause();
     } else {
       videoRef.current?.play();
-      if (!isWatched) setIsWatched(true);
     }
     
     setIsPlaying(!isPlaying);
@@ -122,13 +120,6 @@ const RecordingPlayer = ({
             <TabsTrigger value="intro" className="text-xs">Introduction</TabsTrigger>
             <TabsTrigger value="prescreening" className="text-xs">Pre-screening</TabsTrigger>
           </TabsList>
-          
-          {isWatched && (
-            <div className="flex items-center gap-1 text-xs text-green-600">
-              <Check className="w-3 h-3" />
-              <span>Watched</span>
-            </div>
-          )}
         </div>
         
         <TabsContent value="intro" className="mt-0">
