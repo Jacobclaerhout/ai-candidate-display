@@ -81,10 +81,10 @@ const RecordingPlayer = ({
     <div className={cn("candidate-card animate-slide-in overflow-hidden", className)}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-candidate-accent flex items-center justify-center">
-            <Video className="w-4 h-4 text-candidate-secondary" />
+          <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
+            <Video className="w-5 h-5 text-candidate-secondary" />
           </div>
-          <h3 className="font-medium">Interview Recording</h3>
+          <h3 className="font-medium">Video Introduction</h3>
         </div>
         
         {isWatched && (

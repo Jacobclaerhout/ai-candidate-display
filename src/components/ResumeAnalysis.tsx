@@ -32,11 +32,11 @@ const ResumeAnalysis = ({
   return (
     <div className={cn("candidate-card animate-fade-in", className)}>
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
             <File className="w-5 h-5 text-candidate-secondary" />
           </div>
-          <h3 className="font-medium text-lg">Resume Analysis</h3>
+          <h3 className="font-medium">Resume Analysis</h3>
         </div>
         
         <button 
