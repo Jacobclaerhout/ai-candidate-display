@@ -17,6 +17,7 @@ interface CandidateProfileProps {
   location?: string;
   resumeUrl?: string;
   recordingUrl?: string;
+  prescreeningUrl?: string;
   recommendation: string;
   strengths?: string[];
   weaknesses?: string[];
@@ -48,6 +49,7 @@ const CandidateProfile = ({
   location,
   resumeUrl,
   recordingUrl,
+  prescreeningUrl,
   recommendation,
   strengths,
   weaknesses,
@@ -104,6 +106,7 @@ const CandidateProfile = ({
             
             <RecordingPlayer 
               src={recordingUrl}
+              prescreeningSrc={prescreeningUrl}
               title={`${name} - Interview Recording`}
               duration="15:42"
             />

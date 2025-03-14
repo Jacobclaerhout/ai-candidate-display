@@ -1,10 +1,12 @@
 
 import { useState, useRef } from "react";
-import { Play, Pause, Video, Check } from "lucide-react";
+import { Play, Pause, Video, Check, Film } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 interface RecordingPlayerProps {
   src?: string;
+  prescreeningSrc?: string;
   posterImage?: string;
   title: string;
   duration?: string;
@@ -13,6 +15,7 @@ interface RecordingPlayerProps {
 
 const RecordingPlayer = ({
   src,
+  prescreeningSrc,
   posterImage,
   title,
   duration = "No duration available",
@@ -21,10 +24,12 @@ const RecordingPlayer = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isWatched, setIsWatched] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<"intro" | "prescreening">("intro");
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlayPause = () => {
-    if (!src) return;
+    const currentSrc = activeVideo === "intro" ? src : prescreeningSrc;
+    if (!currentSrc) return;
     
     if (isPlaying) {
       videoRef.current?.pause();
@@ -36,14 +41,27 @@ const RecordingPlayer = ({
     setIsPlaying(!isPlaying);
   };
 
+  const handleTabChange = (value: string) => {
+    // Pause current video if playing
+    if (isPlaying && videoRef.current) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+    setActiveVideo(value as "intro" | "prescreening");
+  };
+
   const renderContent = () => {
-    if (!src) {
+    const currentSrc = activeVideo === "intro" ? src : prescreeningSrc;
+    
+    if (!currentSrc) {
       return (
         <div className="flex flex-col items-center justify-center h-full p-6 text-center">
           <div className="w-16 h-16 mb-4 rounded-full bg-candidate-light flex items-center justify-center">
             <Video className="w-8 h-8 text-candidate-muted" />
           </div>
-          <p className="text-candidate-muted">No recording available</p>
+          <p className="text-candidate-muted">
+            {activeVideo === "intro" ? "No introduction video available" : "No pre-screening call available"}
+          </p>
         </div>
       );
     }
@@ -52,7 +70,7 @@ const RecordingPlayer = ({
       <>
         <video
           ref={videoRef}
-          src={src}
+          src={currentSrc}
           poster={posterImage}
           className="w-full h-full object-cover rounded-lg"
           onEnded={() => setIsPlaying(false)}
@@ -77,27 +95,54 @@ const RecordingPlayer = ({
     );
   };
 
+  const getVideoType = (type: "intro" | "prescreening") => {
+    return type === "intro" 
+      ? "Video Introduction" 
+      : "Pre-screening Call";
+  };
+
+  const getVideoIcon = (type: "intro" | "prescreening") => {
+    return type === "intro" 
+      ? <Video className="w-5 h-5 text-candidate-secondary" />
+      : <Film className="w-5 h-5 text-candidate-secondary" />;
+  };
+
   return (
     <div className={cn("candidate-card animate-slide-in overflow-hidden", className)}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
-            <Video className="w-5 h-5 text-candidate-secondary" />
+      <Tabs defaultValue="intro" onValueChange={handleTabChange} className="w-full">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
+              {getVideoIcon(activeVideo)}
+            </div>
+            <h3 className="font-medium">{getVideoType(activeVideo)}</h3>
           </div>
-          <h3 className="font-medium">Video Introduction</h3>
+          
+          <TabsList className="bg-candidate-light">
+            <TabsTrigger value="intro" className="text-xs">Introduction</TabsTrigger>
+            <TabsTrigger value="prescreening" className="text-xs">Pre-screening</TabsTrigger>
+          </TabsList>
+          
+          {isWatched && (
+            <div className="flex items-center gap-1 text-xs text-green-600">
+              <Check className="w-3 h-3" />
+              <span>Watched</span>
+            </div>
+          )}
         </div>
         
-        {isWatched && (
-          <div className="flex items-center gap-1 text-xs text-green-600">
-            <Check className="w-3 h-3" />
-            <span>Watched</span>
+        <TabsContent value="intro" className="mt-0">
+          <div className="relative aspect-video bg-candidate-light rounded-lg overflow-hidden">
+            {renderContent()}
           </div>
-        )}
-      </div>
-      
-      <div className="relative aspect-video bg-candidate-light rounded-lg overflow-hidden">
-        {renderContent()}
-      </div>
+        </TabsContent>
+        
+        <TabsContent value="prescreening" className="mt-0">
+          <div className="relative aspect-video bg-candidate-light rounded-lg overflow-hidden">
+            {renderContent()}
+          </div>
+        </TabsContent>
+      </Tabs>
       
       <div className="mt-3 flex justify-between items-center">
         <span className="text-xs text-candidate-muted">{duration}</span>

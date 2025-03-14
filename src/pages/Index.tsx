@@ -12,6 +12,7 @@ const Index = () => {
     // In a real application, these would be actual URLs
     resumeUrl: "#",
     recordingUrl: "#",
+    prescreeningUrl: "#", // Added pre-screening video URL
     recommendation: "Great news! Adu Melkie has shown strong interest in the Data Consultant position and their profile looks very promising. I highly recommend reaching out soon to discuss next steps - this could be an excellent match.",
     strengths: [
       "Strong background in data analytics and visualization",
