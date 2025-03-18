@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Candidates = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const position = "Data Consultant"; // The position title for all candidates
 
   // This would typically come from an API or database
   const candidatesData = [
@@ -73,7 +74,7 @@ const Candidates = () => {
       <div className="w-full max-w-6xl mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Candidates</h1>
+            <h1 className="text-3xl font-bold mb-2">Candidates for {position}</h1>
             <p className="text-muted-foreground">Browse and review candidate profiles</p>
           </div>
           

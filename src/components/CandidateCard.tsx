@@ -1,4 +1,3 @@
-
 import { User, Briefcase, MapPin, Check, Info, HelpCircle, X } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -51,7 +50,12 @@ const CandidateCard = ({
           </div>
           <div>
             <h3 className="font-medium text-lg">{name}</h3>
-            <div className="highlight-chip mt-1">{position}</div>
+            {location && (
+              <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
+                <MapPin className="w-3 h-3" />
+                <span>{location}</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -59,14 +63,7 @@ const CandidateCard = ({
           {tagline}
         </p>
 
-        {location && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-            <MapPin className="w-4 h-4" />
-            <span>{location}</span>
-          </div>
-        )}
-
-        <div className="border-t pt-3">
+        <div>
           <div className="flex items-center justify-between text-xs">
             <div className="font-medium">Requirements</div>
             <div className="text-muted-foreground">
