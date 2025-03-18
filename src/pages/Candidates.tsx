@@ -16,43 +16,56 @@ const Candidates = () => {
       name: "Adu Melkie",
       position: "Data Consultant",
       location: "San Francisco, CA",
+      tagline: "Data science expert with 5+ years experience in building ML models.",
+      requirements: { met: 5, inferred: 2, unsure: 1, notMet: 1 }
     },
     {
       id: "2",
       name: "Sarah Johnson",
       position: "Frontend Developer",
       location: "New York, NY",
+      tagline: "UI/UX wizard specialized in React ecosystem with strong design skills.",
+      requirements: { met: 6, inferred: 1, unsure: 1, notMet: 0 }
     },
     {
       id: "3",
       name: "Michael Chen",
       position: "Product Manager",
       location: "Chicago, IL",
+      tagline: "Strategic product leader with history of delivering innovative solutions.",
+      requirements: { met: 4, inferred: 2, unsure: 2, notMet: 1 }
     },
     {
       id: "4",
       name: "Jessica Williams",
       position: "UX Designer",
       location: "Austin, TX",
+      tagline: "Creative designer focused on crafting beautiful, intuitive user experiences.",
+      requirements: { met: 7, inferred: 1, unsure: 0, notMet: 1 }
     },
     {
       id: "5",
       name: "David Rodriguez",
       position: "Backend Engineer",
       location: "Seattle, WA",
+      tagline: "Scalability expert who's built systems handling millions of daily users.",
+      requirements: { met: 5, inferred: 3, unsure: 0, notMet: 0 }
     },
     {
       id: "6",
       name: "Emma Thompson",
       position: "Data Scientist",
       location: "Boston, MA",
+      tagline: "PhD researcher with publications in leading AI/ML conferences.",
+      requirements: { met: 4, inferred: 1, unsure: 2, notMet: 2 }
     }
   ];
 
   const filteredCandidates = candidatesData.filter(candidate => 
     candidate.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     candidate.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (candidate.location && candidate.location.toLowerCase().includes(searchQuery.toLowerCase()))
+    (candidate.location && candidate.location.toLowerCase().includes(searchQuery.toLowerCase())) ||
+    (candidate.tagline && candidate.tagline.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   return (
@@ -86,6 +99,8 @@ const Candidates = () => {
               name={candidate.name}
               position={candidate.position}
               location={candidate.location}
+              tagline={candidate.tagline}
+              requirements={candidate.requirements}
             />
           ))}
         </div>
