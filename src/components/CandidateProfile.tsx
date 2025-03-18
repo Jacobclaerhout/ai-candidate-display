@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import { File, Download, Calendar } from "lucide-react";
+import { File, Download, Calendar, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ContactCard from "./ContactCard";
 import ResumeAnalysis from "./ResumeAnalysis";
 import RecordingPlayer from "./RecordingPlayer";
@@ -60,6 +61,7 @@ const CandidateProfile = ({
   className
 }: CandidateProfileProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   
   const handleScheduleInterview = () => {
     setIsLoading(true);
@@ -70,8 +72,23 @@ const CandidateProfile = ({
     }, 1000);
   };
 
+  const handleViewAllCandidates = () => {
+    navigate('/candidates');
+  };
+
   return (
     <div className={cn("w-full max-w-6xl mx-auto px-4 py-8", className)}>
+      <div className="flex justify-end mb-6">
+        <Button 
+          variant="outline" 
+          onClick={handleViewAllCandidates}
+          className="border-candidate-accent hover:bg-candidate-accent/40 text-candidate-secondary"
+        >
+          <Users className="mr-2 h-4 w-4" />
+          View All Candidates
+        </Button>
+      </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-1 md:sticky md:top-8 md:self-start">
           <ContactCard 
