@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { File, Download, Calendar, Users } from "lucide-react";
+import { File, Download, Calendar, Users, FileText } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import ContactCard from "./ContactCard";
 import ResumeAnalysis from "./ResumeAnalysis";
@@ -79,11 +79,11 @@ const CandidateProfile = ({
   return (
     <div className="min-h-screen bg-gradient-to-br from-candidate-light to-white">
       <div className={cn("w-full max-w-6xl mx-auto px-4 py-8", className)}>
-        <div className="flex justify-start mb-6">
+        <div className="flex justify-start mb-6 md:w-1/3">
           <Button 
             variant="outline" 
             onClick={handleViewAllCandidates}
-            className="border-candidate-accent hover:bg-candidate-accent/40 text-candidate-secondary"
+            className="w-full border-candidate-accent hover:bg-candidate-accent/40 text-candidate-secondary"
           >
             <Users className="mr-2 h-4 w-4" />
             View All Candidates
