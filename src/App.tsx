@@ -29,6 +29,28 @@ const App = () => (
             recommendation="Highly Recommended"
             strengths={["Data Analysis", "Machine Learning", "Communication"]}
             weaknesses={["Limited Experience with Legacy Systems"]}
+            about="Software engineer experienced in working within a high-paced startup setting and collaborating with a large agile team delivering under tight deadlines. Displaying conscientiousness in leadership situations. Demonstrated perseverance, great communication skills, and an eye for detail."
+            experience={[
+              {
+                title: "Software Developer",
+                company: "Fintech",
+                period: "Oct 2022 - Present · 2 yrs 5 mo",
+                location: "London, England, United Kingdom"
+              },
+              {
+                title: "Course Instructor",
+                company: "Code First Girls",
+                period: "Apr 2022 - Present · 2 yrs 11 mo",
+                location: "",
+                description: "Teaching Data and SQL and Web development courses"
+              }
+            ]}
+            education={[
+              {
+                institution: "Lycée Pilote de Monastir",
+                degree: "Computer Science"
+              }
+            ]}
           />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
