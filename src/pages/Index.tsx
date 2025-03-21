@@ -68,11 +68,7 @@ const Index = () => {
     ]
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-candidate-light to-white">
-      <CandidateProfile {...candidateData} />
-    </div>
-  );
+  return <CandidateProfile {...candidateData} />;
 };
 
 export default Index;

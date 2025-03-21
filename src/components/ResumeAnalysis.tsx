@@ -1,9 +1,11 @@
+
 import { File, Check, AlertTriangle, Briefcase, Info, X, HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Card } from "./ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 // Define possible requirement statuses
 type RequirementStatus = "met" | "notMet" | "inferred" | "unsure";
@@ -133,90 +135,93 @@ const ResumeAnalysis = ({
       case "notMet":
         return "bg-red-100";
       default:
-        return "bg-gray-100";
+        return "bg-slate-100";
     }
   };
   
   return (
-    <div className={cn("candidate-card", className)}>
-      <div className="flex items-center justify-between mb-3">
+    <Card className={cn(className)}>
+      <CardHeader className="flex flex-row justify-between items-center pb-2 pt-4 px-4">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full bg-candidate-accent/50 flex items-center justify-center">
-            <File className="w-5 h-5 text-candidate-secondary" />
+          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+            <File className="w-4 h-4 text-slate-600" />
           </div>
-          <h3 className="font-medium text-lg">Application Review</h3>
+          <h3 className="font-medium">Application Review</h3>
         </div>
         
-        <button 
+        <Button 
+          variant="outline"
+          size="sm"
           onClick={handleUpdateRequirements}
           disabled={isUpdating}
-          className="flex items-center gap-2 text-sm text-candidate-secondary hover:text-candidate-primary transition-colors p-2 bg-candidate-accent/40 rounded-md"
         >
-          <Briefcase className="w-4 h-4" />
-          <span>{isUpdating ? "Updating..." : "Update Requirements"}</span>
-        </button>
-      </div>
+          <Briefcase className="w-4 h-4 mr-2" />
+          {isUpdating ? "Updating..." : "Update Requirements"}
+        </Button>
+      </CardHeader>
       
-      <p className="text-gray-700 mb-3 text-sm">{analysis}</p>
-      
-      {/* Collapsible requirements section */}
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger className="w-full">
-          {/* Summary of requirements as clickable trigger */}
-          <div className="flex items-center justify-between py-2">
-            <div className="flex items-center gap-2 text-sm">
-              <span className="font-medium">Requirements:</span>
-              <span className="text-green-600 flex items-center gap-1">
-                <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center">
-                  <Check className="w-2 h-2" />
-                </div>
-                {metCount}
-              </span>
-              <span className="text-blue-600 flex items-center gap-1">
-                <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Info className="w-2 h-2" />
-                </div>
-                {inferredCount}
-              </span>
-              <span className="text-amber-500 flex items-center gap-1">
-                <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center">
-                  <HelpCircle className="w-2 h-2" />
-                </div>
-                {unsureCount}
-              </span>
-              <span className="text-red-600 flex items-center gap-1">
-                <div className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">
-                  <X className="w-2 h-2" />
-                </div>
-                {notMetCount}
-              </span>
-            </div>
-            <div className="text-sm font-medium text-gray-700">
-              {metCount + inferredCount}/{totalRequirements}
-              {isOpen ? (
-                <ChevronUp className="inline-block ml-1 w-4 h-4 text-gray-500" />
-              ) : (
-                <ChevronDown className="inline-block ml-1 w-4 h-4 text-gray-500" />
-              )}
-            </div>
-          </div>
-        </CollapsibleTrigger>
+      <CardContent className="pt-0 px-4 pb-4">
+        <p className="text-muted-foreground mb-3 text-sm">{analysis}</p>
         
-        <CollapsibleContent className="space-y-4 pt-2">
-          {requirements.map((requirement) => (
-            <div key={requirement.id} className="space-y-1">
-              <div className="flex items-start gap-2">
-                <span className={cn("mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center", getStatusBgColor(requirement.status))}>
-                  {renderStatusIcon(requirement.status)}
+        {/* Collapsible requirements section */}
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+          <CollapsibleTrigger className="w-full">
+            {/* Summary of requirements as clickable trigger */}
+            <div className="flex items-center justify-between py-2 hover:bg-slate-50 rounded-md px-2 transition-colors">
+              <div className="flex items-center gap-2 text-sm">
+                <span className="font-medium">Requirements:</span>
+                <span className="text-green-600 flex items-center gap-1">
+                  <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-2 h-2" />
+                  </div>
+                  {metCount}
                 </span>
-                <span className="font-medium text-sm">{requirement.text}</span>
+                <span className="text-blue-600 flex items-center gap-1">
+                  <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
+                    <Info className="w-2 h-2" />
+                  </div>
+                  {inferredCount}
+                </span>
+                <span className="text-amber-500 flex items-center gap-1">
+                  <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center">
+                    <HelpCircle className="w-2 h-2" />
+                  </div>
+                  {unsureCount}
+                </span>
+                <span className="text-red-600 flex items-center gap-1">
+                  <div className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">
+                    <X className="w-2 h-2" />
+                  </div>
+                  {notMetCount}
+                </span>
               </div>
-              <p className="text-gray-500 text-xs ml-7">{requirement.details}</p>
+              <div className="text-sm font-medium text-slate-700">
+                {metCount + inferredCount}/{totalRequirements}
+                {isOpen ? (
+                  <ChevronUp className="inline-block ml-1 w-4 h-4 text-slate-500" />
+                ) : (
+                  <ChevronDown className="inline-block ml-1 w-4 h-4 text-slate-500" />
+                )}
+              </div>
             </div>
-          ))}
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
+          </CollapsibleTrigger>
+          
+          <CollapsibleContent className="space-y-4 pt-2 px-2">
+            {requirements.map((requirement) => (
+              <div key={requirement.id} className="space-y-1">
+                <div className="flex items-start gap-2">
+                  <span className={cn("mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center", getStatusBgColor(requirement.status))}>
+                    {renderStatusIcon(requirement.status)}
+                  </span>
+                  <span className="font-medium text-sm">{requirement.text}</span>
+                </div>
+                <p className="text-muted-foreground text-xs ml-7">{requirement.details}</p>
+              </div>
+            ))}
+          </CollapsibleContent>
+        </Collapsible>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -2,7 +2,9 @@
 import { useState, useRef } from "react";
 import { Play, Pause, Video, Film } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"; 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 interface RecordingPlayerProps {
   src?: string;
@@ -54,10 +56,10 @@ const RecordingPlayer = ({
     if (!currentSrc) {
       return (
         <div className="flex flex-col items-center justify-center h-full p-6 text-center">
-          <div className="w-16 h-16 mb-4 rounded-full bg-candidate-light flex items-center justify-center">
-            <Video className="w-8 h-8 text-candidate-muted" />
+          <div className="w-16 h-16 mb-4 rounded-full bg-slate-100 flex items-center justify-center">
+            <Video className="w-8 h-8 text-slate-400" />
           </div>
-          <p className="text-candidate-muted">
+          <p className="text-slate-500">
             {activeVideo === "intro" ? "No introduction video available" : "No pre-screening call available"}
           </p>
         </div>
@@ -70,13 +72,14 @@ const RecordingPlayer = ({
           ref={videoRef}
           src={currentSrc}
           poster={posterImage}
-          className="w-full h-full object-cover rounded-lg"
+          className="w-full h-full object-cover rounded-md"
           onEnded={() => setIsPlaying(false)}
         />
         
-        <button
+        <Button
+          variant="ghost"
           className={cn(
-            "absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-300",
+            "absolute inset-0 flex items-center justify-center bg-black/30 rounded-md hover:bg-black/40 transition-opacity duration-300",
             isPlaying && !isHovering ? "opacity-0" : "opacity-100"
           )}
           onClick={handlePlayPause}
@@ -85,10 +88,10 @@ const RecordingPlayer = ({
         >
           <div className="w-16 h-16 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center transition-transform duration-300 hover:scale-110">
             {isPlaying ? 
-              <Pause className="w-6 h-6 text-candidate-primary" /> : 
-              <Play className="w-6 h-6 ml-1 text-candidate-primary" />}
+              <Pause className="w-6 h-6 text-slate-900" /> : 
+              <Play className="w-6 h-6 ml-1 text-slate-900" />}
           </div>
-        </button>
+        </Button>
       </>
     );
   };
@@ -101,44 +104,46 @@ const RecordingPlayer = ({
 
   const getVideoIcon = (type: "intro" | "prescreening") => {
     return type === "intro" 
-      ? <Video className="w-5 h-5 text-candidate-secondary" />
-      : <Film className="w-5 h-5 text-candidate-secondary" />;
+      ? <Video className="w-5 h-5 text-slate-600" />
+      : <Film className="w-5 h-5 text-slate-600" />;
   };
 
   return (
-    <div className={cn("candidate-card animate-slide-in overflow-hidden", className)}>
+    <Card className={cn("animate-slide-in", className)}>
       <Tabs defaultValue="intro" onValueChange={handleTabChange} className="w-full">
-        <div className="flex items-center justify-between mb-4">
+        <CardHeader className="pb-2 pt-4 px-4 flex flex-row justify-between items-center">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-candidate-accent flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
               {getVideoIcon(activeVideo)}
             </div>
             <h3 className="font-medium">{getVideoType(activeVideo)}</h3>
           </div>
           
-          <TabsList className="bg-candidate-light">
+          <TabsList className="bg-slate-100">
             <TabsTrigger value="intro" className="text-xs">Introduction</TabsTrigger>
             <TabsTrigger value="prescreening" className="text-xs">Pre-screening</TabsTrigger>
           </TabsList>
-        </div>
+        </CardHeader>
         
-        <TabsContent value="intro" className="mt-0">
-          <div className="relative aspect-video bg-candidate-light rounded-lg overflow-hidden">
-            {renderContent()}
-          </div>
-        </TabsContent>
+        <CardContent className="p-4 pt-0">
+          <TabsContent value="intro" className="mt-0">
+            <div className="relative aspect-video bg-slate-100 rounded-md overflow-hidden">
+              {renderContent()}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="prescreening" className="mt-0">
+            <div className="relative aspect-video bg-slate-100 rounded-md overflow-hidden">
+              {renderContent()}
+            </div>
+          </TabsContent>
+        </CardContent>
         
-        <TabsContent value="prescreening" className="mt-0">
-          <div className="relative aspect-video bg-candidate-light rounded-lg overflow-hidden">
-            {renderContent()}
-          </div>
-        </TabsContent>
+        <CardFooter className="pt-0 pb-3 px-4">
+          <span className="text-xs text-muted-foreground">{duration}</span>
+        </CardFooter>
       </Tabs>
-      
-      <div className="mt-3 flex justify-between items-center">
-        <span className="text-xs text-candidate-muted">{duration}</span>
-      </div>
-    </div>
+    </Card>
   );
 };
 
