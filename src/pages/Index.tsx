@@ -13,6 +13,9 @@ const Index = () => {
     resumeUrl: "#",
     recordingUrl: "#",
     prescreeningUrl: "#", // Added pre-screening video URL
+    // Added transcripts for the videos
+    introTranscript: "Hello, my name is Adu Melkie and I'm a Data Consultant with over 5 years of experience in data analytics, visualization, and migration. I'm excited about this opportunity because I believe my background in cloud transformation initiatives and data management systems makes me a great fit for this role. I look forward to discussing how my skills can benefit your organization.",
+    prescreeningTranscript: "Interviewer: Can you tell us about your experience with data migration projects?\n\nAdu: Absolutely. At Fintech, I led a team that migrated legacy data systems to cloud-based solutions, reducing operational costs by 30% while improving data retrieval speeds by 50%. We implemented a phased migration approach to minimize disruption and ensure data integrity throughout the process.\n\nInterviewer: How do you approach data visualization for non-technical stakeholders?\n\nAdu: I always begin by understanding the key questions the stakeholders need answered. Then I design visualizations that clearly convey those insights without unnecessary complexity. At 3RDi, I created executive dashboards that transformed complex datasets into actionable insights, which helped the leadership make more informed strategic decisions.",
     recommendation: "Great news! Adu Melkie has shown strong interest in the Data Consultant position and their profile looks very promising. I highly recommend reaching out soon to discuss next steps - this could be an excellent match.",
     strengths: [
       "Strong background in data analytics and visualization",

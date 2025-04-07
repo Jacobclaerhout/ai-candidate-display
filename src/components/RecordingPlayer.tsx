@@ -1,10 +1,11 @@
 
 import { useState, useRef } from "react";
-import { Play, Pause, Video, Film } from "lucide-react";
+import { Play, Pause, Video, Film, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"; 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface RecordingPlayerProps {
   src?: string;
@@ -13,6 +14,8 @@ interface RecordingPlayerProps {
   title: string;
   duration?: string;
   className?: string;
+  introTranscript?: string;
+  prescreeningTranscript?: string;
 }
 
 const RecordingPlayer = ({
@@ -21,11 +24,14 @@ const RecordingPlayer = ({
   posterImage,
   title,
   duration = "No duration available",
-  className
+  className,
+  introTranscript = "No transcript available for this video.",
+  prescreeningTranscript = "No transcript available for this pre-screening call."
 }: RecordingPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [activeVideo, setActiveVideo] = useState<"intro" | "prescreening">("intro");
+  const [showTranscript, setShowTranscript] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlayPause = () => {
@@ -48,6 +54,12 @@ const RecordingPlayer = ({
       setIsPlaying(false);
     }
     setActiveVideo(value as "intro" | "prescreening");
+    // Reset transcript visibility when changing tabs
+    setShowTranscript(false);
+  };
+
+  const getCurrentTranscript = () => {
+    return activeVideo === "intro" ? introTranscript : prescreeningTranscript;
   };
 
   const renderContent = () => {
@@ -137,6 +149,29 @@ const RecordingPlayer = ({
               {renderContent()}
             </div>
           </TabsContent>
+          
+          <Collapsible
+            open={showTranscript}
+            onOpenChange={setShowTranscript}
+            className="mt-4 border rounded-md overflow-hidden"
+          >
+            <div className="flex justify-between items-center p-3 bg-slate-50">
+              <div className="flex items-center gap-2">
+                <FileText className="h-4 w-4 text-slate-600" />
+                <span className="text-sm font-medium">Transcript</span>
+              </div>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  {showTranscript ? "Hide" : "Show"}
+                </Button>
+              </CollapsibleTrigger>
+            </div>
+            <CollapsibleContent>
+              <div className="p-4 text-sm bg-white border-t max-h-40 overflow-y-auto">
+                <p className="whitespace-pre-line">{getCurrentTranscript()}</p>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </CardContent>
         
         <CardFooter className="pt-0 pb-3 px-4">
