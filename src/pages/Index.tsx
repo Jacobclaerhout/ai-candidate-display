@@ -4,6 +4,7 @@ import CandidateProfile from "@/components/CandidateProfile";
 const Index = () => {
   // This would typically come from an API or database
   const candidateData = {
+    id: "1",
     name: "Adu Melkie",
     position: "Data Consultant",
     email: "adu.melkie@example.com",
@@ -71,7 +72,7 @@ const Index = () => {
     ]
   };
 
-  return <CandidateProfile {...candidateData} />;
+  return <CandidateProfile candidate={candidateData} />;
 };
 
 export default Index;

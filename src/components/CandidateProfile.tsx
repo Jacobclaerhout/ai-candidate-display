@@ -1,3 +1,4 @@
+
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,9 @@ interface CandidateProfileProps {
     prescreeningVideo?: string;
     introTranscript?: string;
     prescreeningTranscript?: string;
+    about?: string;
+    experience?: any[];
+    education?: any[];
   };
 }
 
@@ -47,23 +51,7 @@ const CandidateProfile = ({ candidate }: CandidateProfileProps) => {
     }
   };
 
-  const videoTabs = [
-    {
-      id: "intro",
-      label: "Introduction Video",
-      videoUrl: candidate.introVideo || "/placeholder-video.mp4",
-      transcript: candidate.introTranscript || "This is a sample transcript for the introduction video. The candidate introduces themselves and explains their background and motivation for applying to this position."
-    },
-    {
-      id: "prescreening",
-      label: "Pre-screening Interview",
-      videoUrl: candidate.prescreeningVideo || "/placeholder-video.mp4", 
-      transcript: candidate.prescreeningTranscript || "This is a sample transcript for the pre-screening interview. The candidate answers technical questions and discusses their experience in detail."
-    }
-  ];
-
   return (
-    
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white py-8">
       <div className="w-full max-w-7xl mx-auto px-4">
         {/* Header */}
@@ -71,7 +59,7 @@ const CandidateProfile = ({ candidate }: CandidateProfileProps) => {
           <Button 
             variant="outline" 
             size="sm"
-            onClick={() => navigate("/candidates")}
+            onClick={() => navigate("/")}
             className="flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -124,14 +112,18 @@ const CandidateProfile = ({ candidate }: CandidateProfileProps) => {
               </CardContent>
             </Card>
 
-            <RecordingPlayer tabs={videoTabs} />
             <ResumeAnalysis />
-            <ResumeDisplay />
+            <ResumeDisplay 
+              about={candidate.about || ""}
+              experience={candidate.experience || []}
+              education={candidate.education || []}
+            />
           </div>
 
           {/* Right Column - Contact & Actions */}
           <div className="space-y-6">
             <ContactCard
+              name={candidate.name}
               email={candidate.email || "adu.melkie@example.com"}
               phone={candidate.phone || "+1 240 389 2080"}
             />
