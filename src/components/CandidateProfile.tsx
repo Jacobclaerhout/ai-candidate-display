@@ -57,7 +57,9 @@ const CandidateProfile = ({
   about,
   experience = [],
   education = [],
-  className
+  className,
+  introTranscript,
+  prescreeningTranscript
 }: CandidateProfileProps) => {
   const [isLoading, setIsLoading] = useState(false);
   
@@ -71,8 +73,8 @@ const CandidateProfile = ({
   };
 
   const handleViewAllCandidates = () => {
-    // In a real app, this would navigate to the candidates list page
-    toast.info("Navigating to all candidates");
+    // Navigate to the candidates list page
+    window.location.href = "/candidates";
   };
 
   return (
@@ -122,6 +124,8 @@ const CandidateProfile = ({
                 prescreeningSrc={prescreeningUrl}
                 title={`${name} - Interview Recording`}
                 duration="15:42"
+                introTranscript={introTranscript}
+                prescreeningTranscript={prescreeningTranscript}
               />
               
               {(about || experience.length > 0 || education.length > 0) && (
